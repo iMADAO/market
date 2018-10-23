@@ -41,52 +41,53 @@ public class CartItemService {
 
     //添加进购物车
     public String addCartItem(CartItemForm cartItemForm){
-       //通过商品id查询商品和店铺信息，验证是否存在
-        ProductShop productShop = commonMapper.getShopInfoByProductId(cartItemForm.getProductId());
-        if(productShop==null || productShop.getShopId()==null) {
-            throw new MadaoException(ErrorEnum.PRODUCT_INFO_ERROR, IdResultMap.getIdMap(cartItemForm.getProductId()));
-        }
-        if(productShop.getProductStock()<cartItemForm.getProductQuantity()){
-            throw new MadaoException(ErrorEnum.PRODUCT_STOCK_ERROR, IdResultMap.getIdMap(cartItemForm.getProductId()));
-        }
-
-        //判断该项商品是否已在购物车，如果是的话，更新数量，如果不是的话，新建项
-        List<CartItem> cartItemList = checkItemExist(cartItemForm.getUserId(), cartItemForm.getProductId());
-        if(cartItemList.size()>0){
-            CartItem cartItem = cartItemList.get(0);
-            cartItem.setProductQuantity(cartItemForm.getProductQuantity());
-            int result = cartItemMapper.updateByPrimaryKeySelective(cartItem);
-            if(result<=0)
-                throw new MadaoException(ErrorEnum.OPERATION_FAIL);
-            return cartItem.getItemId();
-        }
-
-        String itemId = KeyUtil.genUniquKey();
-        CartItem cartItem = new CartItem();
-        BeanUtils.copyProperties(cartItemForm, cartItem);
-        cartItem.setItemId(itemId);
-        cartItem.setShopId(productShop.getShopId());
-        cartItem.setShopName(productShop.getShopName());
-
-        //检查用户购物车项中是否有该商铺，没有就新建一条记录
-        List<CartShop> cartShopList = checkCartShop(cartItemForm.getUserId(), productShop.getShopId());
-        if(cartShopList.size()==0 || cartShopList==null){
-            CartShop cartShop = new CartShop();
-            cartShop.setCartId(KeyUtil.genUniquKey());
-            cartShop.setShopId(productShop.getShopId());
-            cartShop.setUserId(cartItemForm.getUserId());
-            int result = cartShopMapper.insertSelective(cartShop);
-            if(result<=0)
-                throw new MadaoException(ErrorEnum.OPERATION_FAIL);
-            cartItem.setCartId(cartShop.getCartId());
-        }else{
-            cartItem.setCartId(cartShopList.get(0).getCartId());
-        }
-        log.info("【添加进购物车】 cartItem={}, shopId", cartItem, productShop.getShopId());
-        int result = cartItemMapper.insertSelective(cartItem);
-        if(result<=0)
-            throw new MadaoException(ErrorEnum.OPERATION_FAIL);
-        return cartItem.getItemId();
+//       //通过商品id查询商品和店铺信息，验证是否存在
+//        ProductShop productShop = commonMapper.getShopInfoByProductId(cartItemForm.getProductId());
+//        if(productShop==null || productShop.getShopId()==null) {
+//            throw new MadaoException(ErrorEnum.PRODUCT_INFO_ERROR, IdResultMap.getIdMap(cartItemForm.getProductId()));
+//        }
+//        if(productShop.getProductStock()<cartItemForm.getProductQuantity()){
+//            throw new MadaoException(ErrorEnum.PRODUCT_STOCK_ERROR, IdResultMap.getIdMap(cartItemForm.getProductId()));
+//        }
+//
+//        //判断该项商品是否已在购物车，如果是的话，更新数量，如果不是的话，新建项
+//        List<CartItem> cartItemList = checkItemExist(cartItemForm.getUserId(), cartItemForm.getProductId());
+//        if(cartItemList.size()>0){
+//            CartItem cartItem = cartItemList.get(0);
+//            cartItem.setProductQuantity(cartItemForm.getProductQuantity());
+//            int result = cartItemMapper.updateByPrimaryKeySelective(cartItem);
+//            if(result<=0)
+//                throw new MadaoException(ErrorEnum.OPERATION_FAIL);
+//            return cartItem.getItemId();
+//        }
+//
+//        String itemId = KeyUtil.genUniquKey();
+//        CartItem cartItem = new CartItem();
+//        BeanUtils.copyProperties(cartItemForm, cartItem);
+//        cartItem.setItemId(itemId);
+//        cartItem.setShopId(productShop.getShopId());
+//        cartItem.setShopName(productShop.getShopName());
+//
+//        //检查用户购物车项中是否有该商铺，没有就新建一条记录
+//        List<CartShop> cartShopList = checkCartShop(cartItemForm.getUserId(), productShop.getShopId());
+//        if(cartShopList.size()==0 || cartShopList==null){
+//            CartShop cartShop = new CartShop();
+//            cartShop.setCartId(KeyUtil.genUniquKey());
+//            cartShop.setShopId(productShop.getShopId());
+//            cartShop.setUserId(cartItemForm.getUserId());
+//            int result = cartShopMapper.insertSelective(cartShop);
+//            if(result<=0)
+//                throw new MadaoException(ErrorEnum.OPERATION_FAIL);
+//            cartItem.setCartId(cartShop.getCartId());
+//        }else{
+//            cartItem.setCartId(cartShopList.get(0).getCartId());
+//        }
+//        log.info("【添加进购物车】 cartItem={}, shopId", cartItem, productShop.getShopId());
+//        int result = cartItemMapper.insertSelective(cartItem);
+//        if(result<=0)
+//            throw new MadaoException(ErrorEnum.OPERATION_FAIL);
+//        return cartItem.getItemId();
+        return null;
 }
 
 

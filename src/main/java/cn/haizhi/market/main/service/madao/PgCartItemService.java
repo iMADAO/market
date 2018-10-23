@@ -49,7 +49,7 @@ public class PgCartItemService {
        PgCartItemExample example = new PgCartItemExample();
        PgCartItemExample.Criteria criteria = example.createCriteria();
        criteria.andProductIdEqualTo(pgCartItemForm.getProductId());
-       criteria.andUserIdEqualTo(pgCartItemForm.getUserId());
+//       criteria.andUserIdEqualTo(pgCartItemForm.getUserId());
        List<PgCartItem> pgCartItemList = pgCartItemMapper.selectByExample(example);
        PgCartItem pgCartItem = null;
        //如果已存在该商品，加上数量，如果不存在，新建购物车项
@@ -81,30 +81,30 @@ public class PgCartItemService {
    }
 
    public void setPgCartItemQuantity(CartItemReviseForm cartItemReviseForm){
-       PgCartItem pgCartItem = pgCartItemMapper.selectByPrimaryKey(cartItemReviseForm.getCartItemId());
-       if(pgCartItem==null)
-           throw new MadaoException(ErrorEnum.CARTITEM_NOT_EXIST, IdResultMap.getIdMap(cartItemReviseForm.getCartItemId()));
-       if(!pgCartItem.getUserId().equals(cartItemReviseForm.getUserId())){
-           throw new MadaoException(ErrorEnum.CARTITEM_OWNER_ERROR, IdResultMap.getIdMap(cartItemReviseForm.getCartItemId()));
-       }
-       if(pgCartItem.getProductQuantity()<cartItemReviseForm.getQuantity())
-           throw new MadaoException(ErrorEnum.PRODUCT_STOCK_ERROR, IdResultMap.getIdMap(cartItemReviseForm.getCartItemId()));
-       pgCartItem.setProductQuantity(cartItemReviseForm.getQuantity());
-       int result =  pgCartItemMapper.updateByPrimaryKeySelective(pgCartItem);
-       if(result<=0)
-           throw new MadaoException(ErrorEnum.OPERATION_FAIL);
-   }
-
-   public void deleteCartItemById(CartItemDeleteForm cartItemDeleteForm){
-       PgCartItem pgCartItem = pgCartItemMapper.selectByPrimaryKey(cartItemDeleteForm.getCartItemId());
-       if(pgCartItem==null)
-           throw new MadaoException(ErrorEnum.CARTITEM_NOT_EXIST, IdResultMap.getIdMap(cartItemDeleteForm.getCartItemId()));
-       if(!pgCartItem.getUserId().equals(cartItemDeleteForm.getUserId())){
-           throw new MadaoException(ErrorEnum.CARTITEM_OWNER_ERROR, IdResultMap.getIdMap(cartItemDeleteForm.getCartItemId()));
-       }
-       int result = pgCartItemMapper.deleteByPrimaryKey(pgCartItem.getItemId());
-       if(result<=0)
-           throw new MadaoException(ErrorEnum.OPERATION_FAIL);
+//       PgCartItem pgCartItem = pgCartItemMapper.selectByPrimaryKey(cartItemReviseForm.getCartItemId());
+//       if(pgCartItem==null)
+//           throw new MadaoException(ErrorEnum.CARTITEM_NOT_EXIST, IdResultMap.getIdMap(cartItemReviseForm.getCartItemId()));
+//       if(!pgCartItem.getUserId().equals(cartItemReviseForm.getUserId())){
+//           throw new MadaoException(ErrorEnum.CARTITEM_OWNER_ERROR, IdResultMap.getIdMap(cartItemReviseForm.getCartItemId()));
+//       }
+//       if(pgCartItem.getProductQuantity()<cartItemReviseForm.getQuantity())
+//           throw new MadaoException(ErrorEnum.PRODUCT_STOCK_ERROR, IdResultMap.getIdMap(cartItemReviseForm.getCartItemId()));
+//       pgCartItem.setProductQuantity(cartItemReviseForm.getQuantity());
+//       int result =  pgCartItemMapper.updateByPrimaryKeySelective(pgCartItem);
+//       if(result<=0)
+//           throw new MadaoException(ErrorEnum.OPERATION_FAIL);
+//   }
+//
+//   public void deleteCartItemById(CartItemDeleteForm cartItemDeleteForm){
+//       PgCartItem pgCartItem = pgCartItemMapper.selectByPrimaryKey(cartItemDeleteForm.getCartItemId());
+//       if(pgCartItem==null)
+//           throw new MadaoException(ErrorEnum.CARTITEM_NOT_EXIST, IdResultMap.getIdMap(cartItemDeleteForm.getCartItemId()));
+//       if(!pgCartItem.getUserId().equals(cartItemDeleteForm.getUserId())){
+//           throw new MadaoException(ErrorEnum.CARTITEM_OWNER_ERROR, IdResultMap.getIdMap(cartItemDeleteForm.getCartItemId()));
+//       }
+//       int result = pgCartItemMapper.deleteByPrimaryKey(pgCartItem.getItemId());
+//       if(result<=0)
+//           throw new MadaoException(ErrorEnum.OPERATION_FAIL);
    }
 
    public void deleteCartItemByUserId(CartItemEmptyForm cartItemEmptyForm){
